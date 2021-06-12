@@ -2,4 +2,33 @@
 
 
 #include "ShooterAnimInstance.h"
+#include "ShooterCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h" 
+
+void UShooterAnimInstance::UpdateAnimationProperties(float DeltaTime)
+{
+	if (ShooterCharacter == nullptr)
+	{
+		ShooterCharacter = Cast<AShooterCharacter>(TryGetPawnOwner());
+
+	}
+
+	if (ShooterCharacter)
+	{
+		FVector Velocity{ ShooterCharacter->GetVelocity() };
+		Velocity.Z = 0;
+		Speed = Velocity.Size();
+
+		IsInAir = ShooterCharacter->GetCharacterMovement()->IsFalling();
+		
+		IsAccelerating = ShooterCharacter->GetCharacterMovement()->GetCurrentAcceleration().Size() > 0.f;
+		
+	}
+}
+
+void UShooterAnimInstance::NativeInitializeAnimation()
+{
+	ShooterCharacter = Cast<AShooterCharacter>(TryGetPawnOwner());
+
+}
 

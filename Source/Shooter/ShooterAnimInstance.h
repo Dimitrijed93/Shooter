@@ -13,5 +13,23 @@ UCLASS()
 class SHOOTER_API UShooterAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
+
+public:
+	virtual void NativeInitializeAnimation() override;
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateAnimationProperties(float DeltaTime);
 	
+private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	class AShooterCharacter* ShooterCharacter;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	float Speed;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	bool IsInAir;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	bool IsAccelerating;
 };
